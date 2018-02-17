@@ -1,0 +1,8 @@
+
+# ignore some keys files
+fabusers/hfc-key-store
+
+# ignore fabric sdk node modules
+fabusers/node_modules
+
+chaincode
