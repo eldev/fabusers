@@ -3,7 +3,9 @@
 
 The Fabusers project stores user data (public and private data).
 It consists of 2 main parts:
+
 1. blockchain part (using [Hyperledger Fabric](https://www.hyperledger.org/projects/fabric)) contains records of the key-value type (where the key is a user name, a value is a hash value of his offchain data).
+
 2. offchain part uses mongodb to store data.
 
 
@@ -13,13 +15,17 @@ You have to install prerequisites as it is described [here](https://hyperledger-
 and [platform-specific binaries](https://hyperledger-fabric.readthedocs.io/en/latest/samples.html#binaries).
 
 The offchain part uses a mongodb database so you have to install (mgo package (MongoDB driver for Golang)):
+
 		go get gopkg.in/mgo.v2
+
 		go get gopkg.in/mgo.v2/bson
 
 In addition, goji package:
+
 		go get goji.io
 
 After that, you should copy the project's chaincode sample into $GOPATH directory:
+
 		cp ./fabusers_chaincode/fabusers.go $GOPATH/src/fabusers/fabusers.go
 
 ## HOW TO RUN? ##
