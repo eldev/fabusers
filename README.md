@@ -1,15 +1,25 @@
 
 ## FABUSERS ##
 
-description: TODO
+The Fabusers project stores user data (public and private data).
+It consists of 2 main parts:
+1. blockchain part (using [Hyperledger Fabric](https://www.hyperledger.org/projects/fabric)) contains records of the key-value type (where the key is a user name, a value is a hash value of his offchain data).
+2. offchain part uses mongodb to store data.
+
 
 ## PREREQUISITES ##
 
 You have to install prerequisites as it is described [here](https://hyperledger-fabric.readthedocs.io/en/latest/prereqs.html)
 and [platform-specific binaries](https://hyperledger-fabric.readthedocs.io/en/latest/samples.html#binaries).
 
-After that, you should copy the project's chaincode sample into $GOPATH directory:
+The offchain part uses a mongodb database so you have to install (mgo package (MongoDB driver for Golang)):
+		go get gopkg.in/mgo.v2
+		go get gopkg.in/mgo.v2/bson
 
+In addition, goji package:
+		go get goji.io
+
+After that, you should copy the project's chaincode sample into $GOPATH directory:
 		cp ./fabusers_chaincode/fabusers.go $GOPATH/src/fabusers/fabusers.go
 
 ## HOW TO RUN? ##
@@ -28,21 +38,19 @@ This script also install and instantiate the chaincode
 
 		npm install
 
-3. According to [tutorial](https://hyperledger-fabric.readthedocs.io/en/latest/write_first_app.html),
-an *admin* user was registered with CA. But now we need retrieve the eCert for the *admin*.
+4. Open ./offchain, and build this part:
 
-		node enrollAdmin.js
+		go build fabusers_srv.go
 
-4. Register new user (*user1*) in the system
+5. Run the main service process in terminal 1:
 
-		node registerUser.js
+		./fabusers_srv
 
-5. Invoke request needs to change *invoke.js*, and:
+6. In terminal 2 you can send requests to the service by using curl utility and json files.
+For example, to add user with data described in userinfo.json:
 
-		node invoke.js
+		curl -X POST -H "Content-Type: application/json" -d @userinfo.json http://localhost:8080/users
 
-6. For query, you should change *query.js*. After that:
-
-		node query.js
+Other examples of requests you can see in *test_requests.sh*.
 
 

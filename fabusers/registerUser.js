@@ -1,6 +1,6 @@
 'use strict';
 /*
- * Register and Enroll a user
+ * Register and enroll a user
  *
  * USAGE:
  *      node registerUser.js <userlogin>

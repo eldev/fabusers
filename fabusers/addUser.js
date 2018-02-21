@@ -1,6 +1,6 @@
 'use strict';
 /*
- * Chaincode Invoke
+ * Add user into the ledger
  *
  * USAGE:
  *      node invoke.js <username> <userinfohash>

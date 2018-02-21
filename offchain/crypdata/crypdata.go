@@ -1,18 +1,21 @@
-
+/*
+This package is used to encrypt and decrypt private data.
+Also, it provides hash (sha256) procedure for passwords.
+*/
 package crypdata
 
 import (
 	"crypto/rand"
 	"crypto/rsa"
-	"errors"
 	"crypto/sha256"
-
 	"encoding/hex"
-
+	"errors"
 )
 
+// At the first stage, we can use the single pair
+// of private and public keys to encrypt and decrypt private data
+// Idealy, we should use users public and private keys in the Fabric
 var privKey *rsa.PrivateKey = nil
-
 
 func Init() error {
 	// Generate RSA Keys
@@ -24,9 +27,7 @@ func Init() error {
 	return nil
 }
 
-
-
-// Encrypt data
+// Encrypt() encrypts data and returns ciphertext
 func Encrypt(data []byte) ([]byte, error) {
 
 	if privKey == nil {
@@ -37,7 +38,7 @@ func Encrypt(data []byte) ([]byte, error) {
 	// crypto/rand.Reader is a good source of entropy for randomizing the
 	// encryption function.
 	rng := rand.Reader
-	
+
 	ciphertext, err := rsa.EncryptOAEP(sha256.New(), rng, &privKey.PublicKey, data, label)
 	if err != nil {
 		return nil, errors.New("Encryption error")
@@ -46,8 +47,7 @@ func Encrypt(data []byte) ([]byte, error) {
 	}
 }
 
-
-
+// Decrypt() decrypts ciphertext
 func Decrypt(ciphertext []byte) ([]byte, error) {
 
 	if privKey == nil {
@@ -68,8 +68,7 @@ func Decrypt(ciphertext []byte) ([]byte, error) {
 	}
 }
 
-
-
+// Hash() calculates sha256 hash of data
 func Hash(data string) string {
 	hashedBytes := sha256.Sum256([]byte(data))
 	return hex.EncodeToString(hashedBytes[:])
